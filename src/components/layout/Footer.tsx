@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowUpRight, Instagram, Linkedin, Twitter, MapPin } from "lucide-react";
+import { ArrowUpRight, Globe, Share2, ExternalLink, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -40,10 +42,10 @@ export function Footer() {
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 border border-white/40 flex items-center justify-center">
-                <span className="font-serif font-bold text-lg text-white">V</span>
+                <span className="font-serif font-bold text-lg text-white">वि</span>
               </div>
               <span className="font-serif font-bold text-2xl tracking-widest uppercase text-white">
-                VINYASA
+                विNYASA
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm font-sans">
@@ -57,7 +59,7 @@ export function Footer() {
                 className="p-2 border border-[#262422] hover:border-[#C86D51] hover:text-[#C86D51] transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-4 h-4" />
+                <Globe className="w-4 h-4" />
               </a>
               <a
                 href="https://linkedin.com"
@@ -66,7 +68,7 @@ export function Footer() {
                 className="p-2 border border-[#262422] hover:border-[#C86D51] hover:text-[#C86D51] transition-colors"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="w-4 h-4" />
+                <Share2 className="w-4 h-4" />
               </a>
               <a
                 href="https://twitter.com"
@@ -75,7 +77,7 @@ export function Footer() {
                 className="p-2 border border-[#262422] hover:border-[#C86D51] hover:text-[#C86D51] transition-colors"
                 aria-label="Twitter"
               >
-                <Twitter className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" />
               </a>
             </div>
           </div>

@@ -45,11 +45,11 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-3">
           <div className="w-9 h-9 border border-[#1E1C1A] flex items-center justify-center transition-transform duration-300 group-hover:rotate-45">
-            <span className="font-serif font-bold text-lg leading-none">V</span>
+            <span className="font-serif font-bold text-lg leading-none">वि</span>
           </div>
           <div className="flex flex-col">
             <span className="font-serif font-bold text-xl tracking-widest text-[#1E1C1A] uppercase">
-              VINYASA
+              विNYASA
             </span>
             <span className="text-[9px] tracking-[0.25em] text-muted-foreground uppercase -mt-1 font-sans">
               Architecture & Studio
@@ -99,7 +99,7 @@ export function Navbar() {
             <SheetContent side="right" className="flex flex-col justify-between pt-12">
               <SheetHeader className="text-left border-b border-[#DCD5CB] pb-6">
                 <SheetTitle className="text-2xl font-serif tracking-widest uppercase">
-                  VINYASA
+                  विNYASA
                 </SheetTitle>
                 <p className="text-xs text-muted-foreground tracking-wider uppercase">
                   Architecture & Interior Design
