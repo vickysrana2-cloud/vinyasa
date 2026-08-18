@@ -219,3 +219,63 @@ export const PROCESS_STEPS = [
     description: "Meticulous on-site management through construction, custom furniture installation, art placement, and final white-glove reveal."
   }
 ];
+export interface HeroSlide {
+  id: number;
+  image: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  projects: string;
+  features: string[];
+  previewImage: string;
+}
+
+export const heroSlides: HeroSlide[] = [
+  {
+    id: 1,
+    image:
+      "https://demo2.themelexus.com/antra/wp-content/uploads/2025/06/h1-slider1.jpg",
+
+    eyebrow: "FAST AND RELIABLE",
+
+    title: "The Art of Stunning Interior Design",
+
+    description:
+      "Whether it’s your home, office, or a commercial project, we are always dedicated to bringing your vision to life.",
+
+    projects: "260+",
+
+    features: [
+      "Tech Specifications",
+      "Design Project",
+      "3D Visualisation",
+    ],
+
+    previewImage:
+      "https://demo2.themelexus.com/antra/wp-content/uploads/2025/06/h1-slider1-280x300.jpg",
+  },
+
+  {
+    id: 2,
+    image:
+      "https://demo2.themelexus.com/antra/wp-content/uploads/2025/06/h1-slider2.jpg",
+
+    eyebrow: "FAST AND RELIABLE",
+
+    title: "Find Your Inspired Interior Design",
+
+    description:
+      "Whether it’s your home, office, or a commercial project, we are always dedicated to bringing your vision to life.",
+
+    projects: "360+",
+
+    features: [
+      "Tech Specifications",
+      "Design Project",
+      "3D Visualisation",
+    ],
+
+    previewImage:
+      "https://demo2.themelexus.com/antra/wp-content/uploads/2025/06/h1-slider2-280x300.jpg",
+  },
+];

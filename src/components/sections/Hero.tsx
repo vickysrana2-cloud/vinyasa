@@ -1,115 +1,362 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { heroSlides } from "@/data/images";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight, Award, Compass, ShieldCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { IMAGES } from "@/data/images";
 
 export function Hero() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [previousSlide, setPreviousSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setPreviousSlide(activeSlide);
+      setActiveSlide((current) => (current + 1) % heroSlides.length);
+      setIsTransitioning(true);
+    }, 6000);
+
+    return () => window.clearInterval(interval);
+  }, [activeSlide]);
+
+  const slide = heroSlides[activeSlide];
+  const previous = heroSlides[previousSlide];
+
+  const scrollToNextSection = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#F9F8F5]">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#1E1C1A_1px,transparent_1px)] [background-size:24px_24px]" />
+    <section className="relative h-screen min-h-[680px] w-full overflow-hidden bg-black">
+      {/* =========================================================
+    HERO BACKGROUND
+========================================================= */}
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Text Content */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="inline-flex items-center gap-3 px-3.5 py-1.5 border border-[#DCD5CB] rounded-full bg-white/60">
-              <span className="w-2 h-2 rounded-full bg-[#C86D51] animate-pulse" />
-              <span className="text-[11px] font-medium tracking-widest uppercase text-[#1E1C1A]/80">
-                Award-Winning Architectural Studio
-              </span>
-            </div>
+      {/* Previous slide */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={previous.image}
+          alt=""
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
 
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-serif text-[#1E1C1A] leading-[1.08] tracking-tight">
-              Designing spaces that <span className="italic font-normal text-[#C86D51]">resonate</span> with quiet luxury.
-            </h1>
+      {/* New slide - smooth top → bottom reveal */}
+      <motion.div
+        key={slide.id}
+        initial={{
+          clipPath: "inset(0 0 100% 0)",
+        }}
+        animate={{
+          clipPath: "inset(0 0 0% 0)",
+        }}
+        transition={{
+          duration: 1.7,
+          ease: [0.65, 0, 0.35, 1],
+        }}
+        className="absolute inset-0 z-[1] overflow-hidden"
+      >
+        <img
+          src={slide.image}
+          alt=""
+          className="h-full w-full object-cover object-center"
+        />
 
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed font-sans font-light">
-              We orchestrate light, raw materials, and refined spatial geometry to curate tailored residential and commercial environments across New York, London, and Tokyo.
-            </p>
+        {/* Soft moving transition shadow */}
+        <motion.div
+          initial={{ top: "-8%" }}
+          animate={{ top: "108%" }}
+          transition={{
+            duration: 1.7,
+            ease: [0.65, 0, 0.35, 1],
+          }}
+          className="
+      pointer-events-none
+      absolute
+      left-0
+      right-0
+      z-20
+      h-[70px]
+      -translate-y-1/2
+      bg-gradient-to-b
+      from-transparent
+      via-black/25
+      to-transparent
+      blur-[8px]
+    "
+        />
+      </motion.div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Button asChild variant="default" size="lg">
-                <Link href="/projects" className="flex items-center gap-2">
-                  <span>Explore Portfolio</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/about">Our Studio Philosophy</Link>
-              </Button>
-            </div>
+      {/* =========================================================
+    SUBTLE HERO DARK OVERLAY
+========================================================= */}
 
-            {/* Key Metrics */}
-            <div className="pt-8 border-t border-[#DCD5CB] grid grid-cols-3 gap-6">
-              <div>
-                <span className="block text-2xl sm:text-4xl font-serif font-semibold text-[#1E1C1A]">
-                  15+
-                </span>
-                <span className="text-[11px] tracking-wider uppercase text-muted-foreground">
-                  Years Experience
-                </span>
+      <div className="pointer-events-none absolute inset-0 z-[5] bg-black/[0.18]" />
+      {/* =========================================================
+          IMAGE OVERLAY
+      ========================================================= */}
+      <div className="absolute inset-0 bg-[rgba(16,8,1,0.46)]" />
+
+      {/* Slight additional gradient for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/5" />
+
+      {/* =========================================================
+          HERO CONTENT
+      ========================================================= */}
+      <div className="relative z-10 flex h-full items-center">
+        <div className="mx-auto w-full max-w-[1600px] px-6 md:px-10 xl:px-12">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{
+                opacity: 0,
+                y: 35,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -25,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="max-w-[1050px]"
+            >
+              {/* =====================================================
+                  EYEBROW
+              ===================================================== */}
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.02] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.02em] text-white backdrop-blur-[2px]">
+                <span className="h-[6px] w-[6px] rounded-full bg-[#d9a441]" />
+                {slide.eyebrow}
               </div>
-              <div>
-                <span className="block text-2xl sm:text-4xl font-serif font-semibold text-[#1E1C1A]">
-                  240+
-                </span>
-                <span className="text-[11px] tracking-wider uppercase text-muted-foreground">
-                  Completed Projects
-                </span>
-              </div>
-              <div>
-                <span className="block text-2xl sm:text-4xl font-serif font-semibold text-[#1E1C1A]">
-                  18
-                </span>
-                <span className="text-[11px] tracking-wider uppercase text-muted-foreground">
-                  Global Design Awards
-                </span>
-              </div>
-            </div>
-          </div>
 
-          {/* Right Visual Image Composition */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              {/* Primary Image Container */}
-              <div className="relative h-[480px] sm:h-[560px] w-full overflow-hidden shadow-2xl border border-[#E8E3DA]">
-                <Image
-                  src={IMAGES.heroMain}
-                  alt="Vinyasa Luxury Architecture Interior"
-                  fill
-                  className="object-cover transition-transform duration-700 hover:scale-105"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                
-                {/* Floating Architectural Badge */}
-                <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/90 backdrop-blur-md border border-white/50 shadow-lg">
-                  <span className="text-[10px] uppercase tracking-widest text-[#C86D51] font-semibold block">
-                    Featured Project
+              {/* =====================================================
+                  HEADING
+              ===================================================== */}
+              <h1
+                className="
+                  max-w-[950px]
+                  text-white
+                  font-semibold
+                  tracking-[-0.055em]
+                  leading-[0.94]
+                  text-[56px]
+                  sm:text-[68px]
+                  md:text-[78px]
+                  lg:text-[86px]
+                  xl:text-[90px]
+                "
+              >
+                {slide.title}
+              </h1>
+
+              {/* =====================================================
+                  DESCRIPTION
+              ===================================================== */}
+              <p
+                className="
+                  ml-0
+                  mt-8
+                  max-w-[421px]
+                  text-[16px]
+                  font-medium
+                  leading-[1.35]
+                  text-white
+                  sm:ml-[40px]
+                  md:ml-[65px]
+                  md:mt-9
+                  md:text-[17px]
+                  lg:text-[18px]
+                  lg:leading-6
+                "
+              >
+                {slide.description}
+              </p>
+
+              {/* =====================================================
+                  CTA
+              ===================================================== */}
+              <div className="ml-0 mt-8 sm:ml-[40px] md:ml-[60px] md:mt-9">
+                <Link
+                  href="/contact#contact-form"
+                  className="
+    group
+    flex
+    w-fit
+    self-start
+    items-center
+    rounded-full
+    border
+    border-white
+    bg-transparent
+    py-[7px]
+    pl-7
+    pr-2
+    text-[15px]
+    font-medium
+    text-white
+    transition-all
+    duration-300
+    hover:bg-white/10
+  "
+                >
+                  <span>Take Counsel</span>
+
+                  <span
+                    className="
+      ml-4
+      flex
+      h-9
+      w-9
+      shrink-0
+      items-center
+      justify-center
+      rounded-full
+      bg-[#d9a441]
+      text-white
+      transition-transform
+      duration-300
+      group-hover:rotate-45
+    "
+                  >
+                    <ArrowUpRight size={18} strokeWidth={2} />
                   </span>
-                  <p className="text-sm font-serif text-[#1E1C1A]">
-                    The Dune Sanctuary Villa — Malibu
-                  </p>
-                </div>
+                </Link>
               </div>
-
-              {/* Secondary Overlapping Inset Image */}
-              <div className="hidden sm:block absolute -bottom-8 -left-10 w-48 h-48 overflow-hidden shadow-xl border-4 border-[#F9F8F5]">
-                <Image
-                  src={IMAGES.heroSecondary}
-                  alt="Detail Interior Joinery"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
+
+      {/* =========================================================
+          PROJECT INFORMATION
+      ========================================================= */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={slide.id}
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          exit={{
+            opacity: 0,
+            y: 15,
+          }}
+          transition={{
+            duration: 0.6,
+            delay: 0.2,
+            ease: "easeOut",
+          }}
+          className="
+            absolute
+            bottom-7
+            right-7
+            z-20
+            hidden
+            items-stretch
+            gap-5
+            xl:flex
+            2xl:right-12
+          "
+        >
+          {/* Information card */}
+          <div
+            className="
+              flex
+              h-[265px]
+              w-[280px]
+              flex-col
+              rounded-[22px]
+              border
+              border-white/10
+              bg-black/10
+              p-7
+              backdrop-blur-[3px]
+            "
+          >
+            <span className="text-[46px] font-semibold leading-none tracking-[-0.04em] text-white/55">
+              {slide.projects}
+            </span>
+
+            <p className="mt-4 max-w-[180px] text-[14px] font-medium leading-5 text-white/50">
+              Successful Projects And Counting
+            </p>
+
+            <div className="mt-auto space-y-1 text-[13px] font-medium leading-5 text-white/40">
+              {slide.features.map((feature) => (
+                <div key={feature}>{feature}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Preview image */}
+          <div className="h-[265px] w-[250px] overflow-hidden rounded-[22px]">
+            <img
+              src={slide.previewImage}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* =========================================================
+          SCROLL DOWN
+      ========================================================= */}
+      <motion.button
+        type="button"
+        onClick={scrollToNextSection}
+        aria-label="Scroll to next section"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{
+          opacity: 1,
+          y: [0, 5, 0],
+        }}
+        transition={{
+          opacity: {
+            duration: 0.5,
+            delay: 0.8,
+          },
+          y: {
+            duration: 1.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
+        }}
+        className="
+          absolute
+          bottom-7
+          left-1/2
+          z-20
+          flex
+          h-11
+          w-11
+          -translate-x-1/2
+          items-center
+          justify-center
+          rounded-full
+          bg-white
+          text-[#d9a441]
+          shadow-lg
+          transition-transform
+          hover:scale-105
+        "
+      >
+        <ArrowDown size={21} strokeWidth={1.8} />
+      </motion.button>
     </section>
   );
 }

@@ -1,11 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { Mail, Phone, MapPin, Clock, CheckCircle2, ArrowUpRight } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  CheckCircle2,
+  ArrowUpRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 
 const OFFICES = [
   {
@@ -84,14 +96,16 @@ export default function ContactPage() {
               Let&apos;s shape your space together.
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
-              Whether you are planning a private coastal sanctuary, an urban loft, or a commercial flagship, we invite you to start a conversation with our studio.
+              Whether you are planning a private coastal sanctuary, an urban
+              loft, or a commercial flagship, we invite you to start a
+              conversation with our studio.
             </p>
           </div>
         </div>
       </section>
 
       {/* Main Form & Contact Info Section */}
-      <section className="py-20 border-b border-[#DCD5CB]">
+      <section id="contact-form" className="py-20 border-b border-[#DCD5CB]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             {/* Form Column */}
@@ -101,16 +115,21 @@ export default function ContactPage() {
                   Consultation Request
                 </h2>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Fill out the form below and our client director will contact you within 24 hours.
+                  Fill out the form below and our client director will contact
+                  you within 24 hours.
                 </p>
               </div>
 
               {submitted ? (
                 <div className="p-8 bg-[#F4F9F5] border border-[#BDE0C7] text-[#1E562F] space-y-4 text-center">
                   <CheckCircle2 className="w-12 h-12 text-[#288444] mx-auto animate-bounce" />
-                  <h3 className="text-xl font-serif">Thank You for Your Inquiry</h3>
+                  <h3 className="text-xl font-serif">
+                    Thank You for Your Inquiry
+                  </h3>
                   <p className="text-xs text-[#2A6E3F] max-w-md mx-auto leading-relaxed">
-                    We have received your project details. A member of our senior architectural team will reach out to schedule your private consultation.
+                    We have received your project details. A member of our
+                    senior architectural team will reach out to schedule your
+                    private consultation.
                   </p>
                   <Button
                     onClick={() => setSubmitted(false)}
@@ -131,7 +150,9 @@ export default function ContactPage() {
                         required
                         placeholder="e.g. Victoria Sterling"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                       />
                     </div>
 
@@ -144,7 +165,9 @@ export default function ContactPage() {
                         type="email"
                         placeholder="e.g. victoria@domain.com"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                       />
                     </div>
                   </div>
@@ -157,7 +180,9 @@ export default function ContactPage() {
                       <Input
                         placeholder="+1 (555) 000-0000"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
                       />
                     </div>
 
@@ -168,7 +193,9 @@ export default function ContactPage() {
                       <Input
                         placeholder="e.g. Aspen, Colorado / Paris"
                         value={formData.location}
-                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, location: e.target.value })
+                        }
                       />
                     </div>
                   </div>
@@ -181,12 +208,25 @@ export default function ContactPage() {
                       <select
                         className="w-full h-12 border border-[#DCD5CB] bg-transparent px-4 text-sm focus:outline-none focus:border-[#1E1C1A]"
                         value={formData.serviceType}
-                        onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            serviceType: e.target.value,
+                          })
+                        }
                       >
-                        <option value="residential">Bespoke Residential Architecture</option>
-                        <option value="interior">Interior Architecture & Joinery</option>
-                        <option value="commercial">Commercial / Workspace</option>
-                        <option value="turnkey">Turnkey Design & Execution</option>
+                        <option value="residential">
+                          Bespoke Residential Architecture
+                        </option>
+                        <option value="interior">
+                          Interior Architecture & Joinery
+                        </option>
+                        <option value="commercial">
+                          Commercial / Workspace
+                        </option>
+                        <option value="turnkey">
+                          Turnkey Design & Execution
+                        </option>
                       </select>
                     </div>
 
@@ -197,11 +237,19 @@ export default function ContactPage() {
                       <select
                         className="w-full h-12 border border-[#DCD5CB] bg-transparent px-4 text-sm focus:outline-none focus:border-[#1E1C1A]"
                         value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, budget: e.target.value })
+                        }
                       >
-                        <option value="$150k - $250k">$150,000 – $250,000</option>
-                        <option value="$250k - $500k">$250,000 – $500,000</option>
-                        <option value="$500k - $1M">$500,000 – $1,000,000</option>
+                        <option value="$150k - $250k">
+                          $150,000 – $250,000
+                        </option>
+                        <option value="$250k - $500k">
+                          $250,000 – $500,000
+                        </option>
+                        <option value="$500k - $1M">
+                          $500,000 – $1,000,000
+                        </option>
                         <option value="$1M+">$1,000,000+</option>
                       </select>
                     </div>
@@ -215,11 +263,18 @@ export default function ContactPage() {
                       required
                       placeholder="Tell us about the property, your desired timeline, scope of work, and aesthetic aspirations..."
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
                     />
                   </div>
 
-                  <Button type="submit" variant="accent" size="lg" className="w-full">
+                  <Button
+                    type="submit"
+                    variant="accent"
+                    size="lg"
+                    className="w-full"
+                  >
                     Submit Project Inquiry
                   </Button>
                 </form>
@@ -236,18 +291,26 @@ export default function ContactPage() {
                   Our Studio Offices
                 </h2>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Visit our studios by appointment for material inspections and spatial blueprint reviews.
+                  Visit our studios by appointment for material inspections and
+                  spatial blueprint reviews.
                 </p>
               </div>
 
               <div className="space-y-6">
                 {OFFICES.map((office, idx) => (
-                  <div key={idx} className="bg-white border border-[#E5DFD5] p-6 space-y-3 shadow-sm">
-                    <h3 className="text-lg font-serif text-[#1E1C1A]">{office.city}</h3>
+                  <div
+                    key={idx}
+                    className="bg-white border border-[#E5DFD5] p-6 space-y-3 shadow-sm"
+                  >
+                    <h3 className="text-lg font-serif text-[#1E1C1A]">
+                      {office.city}
+                    </h3>
                     <div className="space-y-1.5 text-xs text-muted-foreground">
                       <p className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-[#C86D51] shrink-0" />
-                        <span>{office.address}, {office.district}</span>
+                        <span>
+                          {office.address}, {office.district}
+                        </span>
                       </p>
                       <p className="flex items-center gap-2">
                         <Phone className="w-3.5 h-3.5 text-[#C86D51] shrink-0" />
@@ -282,7 +345,11 @@ export default function ContactPage() {
             </h2>
           </div>
 
-          <Accordion type="single" collapsible className="bg-white p-6 border border-[#E5DFD5]">
+          <Accordion
+            type="single"
+            collapsible
+            className="bg-white p-6 border border-[#E5DFD5]"
+          >
             {FAQS.map((faq, idx) => (
               <AccordionItem key={idx} value={`faq-${idx}`}>
                 <AccordionTrigger className="hover:no-underline font-serif text-[#1E1C1A]">
