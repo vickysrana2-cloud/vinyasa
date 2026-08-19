@@ -275,17 +275,20 @@ export function Hero() {
           {/* Information card */}
           <div
             className="
-              flex
-              h-[265px]
-              w-[280px]
-              flex-col
-              rounded-[22px]
-              border
-              border-white/10
-              bg-black/10
-              p-7
-              backdrop-blur-[3px]
-            "
+    flex
+    h-[265px]
+    w-[280px]
+    flex-col
+    rounded-[22px]
+    border
+    border-white/10
+    bg-black/10
+    p-7
+    backdrop-blur-[5px]
+    transition-all
+    duration-700
+    ease-[cubic-bezier(0.22,1,0.36,1)]
+  "
           >
             <span className="text-[46px] font-semibold leading-none tracking-[-0.04em] text-white/55">
               {slide.projects}
@@ -323,7 +326,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 8 }}
         animate={{
           opacity: 1,
-          y: [0, 5, 0],
+          y: [0, 18, 0],
         }}
         transition={{
           opacity: {
@@ -331,9 +334,9 @@ export function Hero() {
             delay: 0.8,
           },
           y: {
-            duration: 1.8,
+            duration: 2.4,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: [0.45, 0, 0.55, 1],
           },
         }}
         className="

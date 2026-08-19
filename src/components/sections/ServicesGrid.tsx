@@ -5,79 +5,194 @@ import { SERVICES } from "@/data/images";
 
 export function ServicesGrid() {
   return (
-    <section className="py-24 bg-[#F9F8F5]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section className="bg-[#F9F8F5] py-24">
+      <div className="mx-auto max-w-7xl px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-16 border-b border-[#DCD5CB]">
-          <div className="space-y-3 max-w-2xl">
-            <span className="text-xs uppercase tracking-[0.25em] text-[#C86D51] font-semibold">
+        <div className="flex flex-col justify-between gap-6 border-b border-[#DCD5CB] pb-16 md:flex-row md:items-end">
+          <div className="max-w-2xl space-y-3">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#C86D51]">
               Our Capabilities
             </span>
-            <h2 className="text-3xl sm:text-5xl font-serif text-[#1E1C1A]">
+
+            <h2 className="font-serif text-3xl text-[#1E1C1A] sm:text-5xl">
               Comprehensive architectural & interior services.
             </h2>
           </div>
-          <p className="text-sm text-muted-foreground max-w-md font-sans">
-            From concept drafting and spatial planning to turnkey procurement, we deliver cohesive luxury environments.
+
+          <p className="max-w-md font-sans text-sm text-muted-foreground">
+            From concept drafting and spatial planning to turnkey procurement,
+            we deliver cohesive luxury environments.
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-12">
+        {/* =========================================================
+            MOBILE — ONE CARD AT A TIME
+        ========================================================= */}
+        <div className="relative overflow-hidden pt-12 md:hidden">
+          <div className="services-slider flex">
+            {SERVICES.map((service) => (
+              <div
+                key={service.id}
+                className="w-full shrink-0"
+              >
+                <ServiceCard service={service} />
+              </div>
+            ))}
+
+            {/* Clone first card for seamless final transition */}
+            {SERVICES.length > 0 && (
+              <div className="w-full shrink-0">
+                <ServiceCard service={SERVICES[0]} />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* =========================================================
+            TABLET / DESKTOP — NORMAL GRID
+        ========================================================= */}
+        <div className="hidden grid-cols-1 gap-8 pt-12 md:grid md:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((service) => (
-            <div
-              key={service.id}
-              className="group bg-white border border-[#E5DFD5] hover:border-[#C86D51] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl"
-            >
-              <div>
-                {/* Image Header */}
-                <div className="relative h-56 w-full overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4 bg-[#1E1C1A]/80 backdrop-blur-sm text-white px-3 py-1 text-xs font-serif">
-                    {service.number}
-                  </div>
-                </div>
-
-                {/* Body Content */}
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-serif text-[#1E1C1A] group-hover:text-[#C86D51] transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Bullet features */}
-                  <ul className="space-y-2 pt-2 border-t border-[#F0ECE4]">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="text-[11px] text-[#3A3530] flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-[#C86D51]" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Bottom Link Action */}
-              <div className="p-6 pt-0 mt-auto">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#1E1C1A] group-hover:text-[#C86D51] transition-colors"
-                >
-                  <span>Request Proposal</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+            <ServiceCard key={service.id} service={service} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+function ServiceCard({
+  service,
+}: {
+  service: (typeof SERVICES)[number];
+}) {
+  return (
+    <div
+      className="
+        group
+        flex
+        min-h-full
+        w-full
+        flex-col
+        justify-between
+        overflow-hidden
+        border
+        border-[#E5DFD5]
+        bg-white
+        shadow-sm
+        transition-all
+        duration-300
+        hover:border-[#C86D51]
+        hover:shadow-xl
+        md:w-auto
+      "
+    >
+      <div>
+        {/* Image */}
+        <div className="relative h-56 w-full overflow-hidden">
+          <Image
+            src={service.image}
+            alt={service.title}
+            fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw"
+            className="
+              object-cover
+              transition-transform
+              duration-700
+              ease-out
+              group-hover:scale-105
+            "
+          />
+
+          {/* Number */}
+          <div
+            className="
+              absolute
+              left-4
+              top-4
+              bg-[#1E1C1A]/80
+              px-3
+              py-1
+              font-serif
+              text-xs
+              text-white
+              backdrop-blur-sm
+            "
+          >
+            {service.number}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="space-y-4 p-6">
+          <h3
+            className="
+              font-serif
+              text-xl
+              text-[#1E1C1A]
+              transition-colors
+              duration-300
+              group-hover:text-[#C86D51]
+            "
+          >
+            {service.title}
+          </h3>
+
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {service.description}
+          </p>
+
+          {/* Features */}
+          <ul className="space-y-2 border-t border-[#F0ECE4] pt-3">
+            {service.features.map((feature, idx) => (
+              <li
+                key={`${service.id}-feature-${idx}`}
+                className="flex items-center gap-2 text-[11px] text-[#3A3530]"
+              >
+                <span className="h-1 w-1 shrink-0 rounded-full bg-[#C86D51]" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Bottom Link */}
+      <div className="mt-auto p-6 pt-0">
+        <Link
+          href="/contact"
+          className="
+            inline-flex
+            items-center
+            gap-2
+            text-xs
+            font-semibold
+            uppercase
+            tracking-wider
+            text-[#1E1C1A]
+            transition-colors
+            duration-300
+            group-hover:text-[#C86D51]
+          "
+        >
+          <span>Request Proposal</span>
+
+          <ArrowUpRight
+            className="
+              h-3.5
+              w-3.5
+              transition-transform
+              duration-300
+              group-hover:-translate-y-0.5
+              group-hover:translate-x-0.5
+            "
+          />
+        </Link>
+      </div>
+    </div>
   );
 }
