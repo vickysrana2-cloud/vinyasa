@@ -21,7 +21,7 @@ export function PortfolioShowcase({ isFullPage = false }: { isFullPage?: boolean
   const [selectedProject, setSelectedProject] = React.useState<Project | null>(null);
 
   const filteredProjects = React.useMemo(() => {
-    if (activeCategory === "all") return isFullPage ? PROJECTS : PROJECTS.slice(0, 4);
+    if (activeCategory === "all") return isFullPage ? PROJECTS : PROJECTS.slice(0, 5);
     return PROJECTS.filter((p) => p.category === activeCategory);
   }, [activeCategory, isFullPage]);
 
@@ -58,54 +58,173 @@ export function PortfolioShowcase({ isFullPage = false }: { isFullPage?: boolean
         </div>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              onClick={() => setSelectedProject(project)}
-              className="group relative bg-white border border-[#E5DFD5] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
-            >
-              {/* Image Container */}
-              <div className="relative h-80 sm:h-96 w-full overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
+  {filteredProjects.map((project, index) => {
+    const layout =
+      index === 0
+        ? "md:col-span-12"
+        : index % 4 === 1
+          ? "md:col-span-7"
+          : index % 4 === 2
+            ? "md:col-span-5"
+            : index % 4 === 3
+              ? "md:col-span-5"
+              : "md:col-span-7";
 
-                {/* Top Badge */}
-                <div className="absolute top-4 left-4 z-10">
-                  <Badge variant="secondary" className="capitalize">
-                    {project.category}
-                  </Badge>
-                </div>
+    return (
+      <div
+        key={project.id}
+        onClick={() => setSelectedProject(project)}
+        className={`
+          ${layout}
+          group
+          relative
+          cursor-pointer
+          overflow-hidden
+          border
+          border-[#E5DFD5]
+          bg-white
+          shadow-sm
+          transition-all
+          duration-500
+          hover:shadow-2xl
+        `}
+      >
+        {/* Image */}
+        <div
+          className={`
+            relative
+            w-full
+            overflow-hidden
+            ${
+              index === 0
+                ? "h-[420px] sm:h-[560px] md:h-[620px]"
+                : "h-[360px] sm:h-[440px] md:h-[500px]"
+            }
+          `}
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes={
+              index === 0
+                ? "100vw"
+                : "(max-width: 768px) 100vw, 60vw"
+            }
+            className="
+              object-cover
+              transition-transform
+              duration-1000
+              ease-out
+              group-hover:scale-[1.04]
+            "
+          />
 
-                {/* Floating Expand Icon */}
-                <div className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#1E1C1A] opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75">
-                  <Maximize2 className="w-4 h-4" />
-                </div>
+          {/* Existing overlay */}
+          <div
+            className="
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-black/70
+              via-black/20
+              to-transparent
+              opacity-80
+              transition-opacity
+              duration-500
+              group-hover:opacity-90
+            "
+          />
 
-                {/* Bottom Overlay Text */}
-                <div className="absolute bottom-6 left-6 right-6 z-10 text-white space-y-2">
-                  <div className="flex items-center gap-4 text-xs text-gray-300 font-sans uppercase tracking-wider">
-                    <span>{project.location}</span>
-                    <span>•</span>
-                    <span>{project.year}</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-serif text-white group-hover:text-[#F2C4B3] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-gray-200 line-clamp-2 font-sans font-light">
-                    {project.description}
-                  </p>
-                </div>
+          {/* Category */}
+          <div className="absolute left-4 top-4 z-10">
+            <Badge variant="secondary" className="capitalize">
+              {project.category}
+            </Badge>
+          </div>
+
+          {/* Expand Icon */}
+          <div
+            className="
+              absolute
+              right-4
+              top-4
+              z-10
+              flex
+              h-9
+              w-9
+              scale-75
+              items-center
+              justify-center
+              rounded-full
+              bg-white/80
+              text-[#1E1C1A]
+              opacity-0
+              backdrop-blur-sm
+              transition-all
+              duration-300
+              group-hover:scale-100
+              group-hover:opacity-100
+            "
+          >
+            <Maximize2 className="h-4 w-4" />
+          </div>
+
+          {/* Project Information */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 p-6 sm:p-8">
+            <div className="max-w-2xl space-y-2 text-white">
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-3
+                  text-xs
+                  font-sans
+                  uppercase
+                  tracking-wider
+                  text-gray-300
+                "
+              >
+                <span>{project.location}</span>
+                <span>•</span>
+                <span>{project.year}</span>
               </div>
+
+              <h3
+                className="
+                  font-serif
+                  text-2xl
+                  text-white
+                  transition-colors
+                  duration-300
+                  group-hover:text-[#F2C4B3]
+                  sm:text-3xl
+                  md:text-4xl
+                "
+              >
+                {project.title}
+              </h3>
+
+              <p
+                className="
+                  max-w-xl
+                  text-xs
+                  font-light
+                  leading-relaxed
+                  text-gray-200
+                  sm:text-sm
+                "
+              >
+                {project.description}
+              </p>
             </div>
-          ))}
+          </div>
         </div>
+      </div>
+    );
+  })}
+</div>
 
         {/* View All Button on Homepage */}
         {!isFullPage && (
