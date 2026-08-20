@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About Studio", href: "/about" },
   { label: "Projects", href: "/projects" },
+  { label: "Manage Leave", href: "/manage-leave-list" },
   { label: "Contact", href: "/contact" },
 ];
 

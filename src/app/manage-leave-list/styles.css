@@ -1,0 +1,26 @@
+/*
+ * Manage Leave List — feature-scoped styles.
+ *
+ * Everything normal (spacing, typography, buttons, inputs, layout) is done
+ * with Tailwind utility classes directly on the components. This file only
+ * holds the handful of things that are easiest to express as plain CSS
+ * against AG Grid's DOM, and never touches global Vinyasa styles.
+ */
+
+.ag-theme-vinyasa-leave-list {
+  --ag-value-change-value-highlight-background-color: transparent;
+}
+
+/* Keep long "Reason For Leave" text readable without forcing the row taller
+   than necessary; the browser tooltip (tooltipField) covers full text. */
+.ag-theme-vinyasa-leave-list .ag-cell {
+  line-height: 1.35;
+}
+
+/* On small screens, let the grid scroll horizontally inside its own
+   container instead of pushing the whole page layout wider. */
+@media (max-width: 640px) {
+  .ag-theme-vinyasa-leave-list {
+    min-width: 640px;
+  }
+}
